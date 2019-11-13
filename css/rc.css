@@ -1,0 +1,51 @@
+#gameplanGraphic {
+  border: 1px solid black;
+}
+#car {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  background-image: url('../images/car01/car01iso_0005.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  -webkit-transition: all 1s ease;
+  -moz-transition: all 1s ease;
+  -o-transition: all 1s ease;
+  -ms-transition: all 1s ease;
+  transition: all 1s ease;
+}
+#car.E {
+  background-image: url('../images/car01/car01iso_0007.png');
+}
+#car.S {
+  background-image: url('../images/car01/car01iso_0001.png');
+}
+#car.W {
+  background-image: url('../images/car01/car01iso_0003.png');
+}
+#gameplanGraphic {
+  display: inline-block;
+  position: relative;
+}
+.row {
+  height: 40px;
+}
+.row .tile {
+  float: left;
+  width: 40px;
+  height: 40px;
+  background-image: url('../images/tiles/tile_1.png');
+  background-size: contain;
+}
+.row .tile._2 {
+  background-image: url('../images/tiles/tile_2.png');
+}
+.row .tile._3 {
+  background-image: url('../images/tiles/tile_3.png');
+}
+.row .tile._4 {
+  background-image: url('../images/tiles/tile_4.png');
+}
+.row .tile._5 {
+  background-image: url('../images/tiles/tile_5.png');
+}

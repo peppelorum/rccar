@@ -1,0 +1,71 @@
+
+
+
+#gameplanGraphic {
+    border: 1px solid black;
+}
+
+#car {
+    position: absolute;
+    // background: red;
+    width: 40px;
+    height: 40px;
+    // border-top: 4px black solid;
+    background-image: url('../images/car01/car01iso_0005.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+
+    -webkit-transition: all 1s ease;
+    -moz-transition: all 1s ease;
+    -o-transition: all 1s ease;
+    -ms-transition: all 1s ease;
+    transition: all 1s ease;
+
+    &.E {
+        background-image: url('../images/car01/car01iso_0007.png');
+    }
+
+    &.S {
+        background-image: url('../images/car01/car01iso_0001.png');
+    }
+
+    &.W {
+        background-image: url('../images/car01/car01iso_0003.png');
+    }
+
+
+}
+
+#gameplanGraphic {
+    display: inline-block;
+    position: relative;
+}
+
+.row {
+    height: 40px;
+
+    .tile {
+        float: left;
+        width: 40px;
+        height: 40px;
+        background-image: url('../images/tiles/tile_1.png');
+        background-size: contain;
+        // border: 1px solid grey;
+
+        &._2 {
+            background-image: url('../images/tiles/tile_2.png');
+        }
+
+        &._3 {
+            background-image: url('../images/tiles/tile_3.png');
+        }
+
+        &._4 {
+            background-image: url('../images/tiles/tile_4.png');
+        }
+
+        &._5 {
+            background-image: url('../images/tiles/tile_5.png');
+        }
+    }
+}

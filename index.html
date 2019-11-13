@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+            <meta charset="utf-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+
+            <link rel="stylesheet" type="text/css" href="css/rc.css">
+    </head>
+
+    <body data-bind="with: game" >
+
+
+        <input type="text" data-bind="value: model.size">
+        <input type="text" data-bind="value: model.car">
+        <input type="text" data-bind="value: model.pathStart">
+        <input type="text" disabled data-bind="value: model.carDirection">
+        <input type="text" disabled data-bind="value: model.pathRemaining">
+
+        <button data-bind="click: drive">Start</button>
+        <button data-bind="click: driveStep">Step</button>
+
+        <div id="gameplan" data-bind="foreach: { data: model.space, as: 'row' }">
+            
+            <div data-bind="foreach: { data: row, as: 'item' }">
+                
+                <i data-bind="text: item"></i>
+
+            </div>
+
+        </div>
+
+
+
+
+        <div id="gameplanGraphic">
+
+                <div data-bind="foreach: { data: model.space, as: 'row' }">
+            
+                        <div class="row" data-bind="foreach: { data: row, as: 'item' }">
+                            
+                            <div class="tile"></div>
+                            <!-- <div class="tile" data-bind="class: function() { return '_'+ Math.ceil(Math.random() * 5); }()"></div> -->
+            
+                        </div>
+            
+                    </div>
+
+            <div id="car" data-bind="class: model.carDirection, style: { top: model.guiCarX, left: model.guiCarY }"></div>
+
+        </div>
+        
+
+
+
+
+    </body>
+
+
+<script src="js/vendor/lodash.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.0/knockout-min.js"></script>
+<!-- <script src="js/vendor/knockout.mapping-latest.js"></script> -->
+<!-- <script src="js/vendor/knockout.validation.min.js"></script> -->
+
+<script src="js/rc.js"></script>
+<script src="js/models/game.js"></script>
+
+</html>
