@@ -16,6 +16,9 @@ app.models.audio = new function() {
     self.model.win = new Audio('../../audio/win.mp3');
     self.model.loose  = new Audio('../../audio/loose.mp3');
 
+    self.model.start.loop = true
+    self.model.ingame.loop = true
+
     self.startSound = function(sound) {
 
         self.model.start.pause();

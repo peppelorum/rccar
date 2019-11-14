@@ -1,5 +1,18 @@
+body {
+  position: relative;
+  background: url('../images/back.jpg') no-repeat 0 0;
+  font-family: 'BioRhyme', serif;
+}
+#wrapper {
+  position: relative;
+  left: 50%;
+  float: left;
+}
 #gameplanGraphic {
-  border: 1px solid black;
+  position: relative;
+  left: -50%;
+  top: 200px;
+  float: left;
 }
 #car {
   position: absolute;
@@ -33,10 +46,6 @@
 }
 #explosion.fire {
   background-image: url('../images/explosion.gif');
-}
-#gameplanGraphic {
-  display: inline-block;
-  position: relative;
 }
 .row {
   height: 40px;

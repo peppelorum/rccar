@@ -4,17 +4,13 @@ if (!app.models) {
     app.models = {};
 }
 
-
 app.models.game = new function() {
     'use strict';
 
     var self = this;
     self.model = {};
 
-    self.start = function() {
-        console.log('asd')
-    };
-
+    //Model properties of the game
     self.model.size = ko.observable('5 5');
     self.model.car = ko.observable('1 1 N');
     self.model.pathStart = ko.observable('FFFRFFLBB');
@@ -24,6 +20,7 @@ app.models.game = new function() {
     self.model.carDirection = ko.observable('');
     self.model.crash = ko.observable(false);
     self.model.crashSite = ko.observableArray([]);
+    self.model.space = ko.observableArray([]);
     self.model.success = ko.observable(false);
     self.model.successChecker = ko.computed(function() {            //This should be a subscribe..
         if (!self.model.crash() && self.model.pathRemaining().length === 0) {
@@ -31,22 +28,36 @@ app.models.game = new function() {
                 setTimeout(function() {
                     app.models.game.model.success(true);
                     app.models.audio.startSound('win');
+                    app.dialogSuccess();
                 }, 1000);
             }
         }
         self.model.success(false);
     });
 
+    //Event handler for crash
     self.onCrash = ko.computed(function() { 
         if (self.model.crash()) {
             app.models.audio.startSound('loose');
+            setTimeout(function() {
+                app.dialogCrash();
+            }, 2000)
+            
         }
     })
 
+    //Reset after a crash
+    self.resetCrash = function() {
+        self.model.crash(false);
+        self.model.pathStart('FFFRFFLBB');
+        self.model.pathRemaining('FFFRFFLBB');
+    }
 
+    //Listen to the form input 
     self.carDirection = ko.computed(function() {
         try {
             var direction = self.model.car().split(' ')[2];
+            self.model.carDirection(direction);
             return direction;
         } catch(e) {
             console.error('direction', e)
@@ -54,6 +65,7 @@ app.models.game = new function() {
         
     });
     
+    //Update the map size
     self.model.sizeX = ko.computed(function() {
         try {
             var x = parseInt(self.model.size().split(' ')[0], 10);
@@ -63,6 +75,8 @@ app.models.game = new function() {
             return 0;
         }
     });
+
+    //Update the map size
     self.model.sizeY = ko.computed(function() {
         try {
             var x = parseInt(self.model.size().split(' ')[1], 10);
@@ -73,20 +87,19 @@ app.models.game = new function() {
         }
     });
 
+    //Update the car position
     self.model.guiCarX = ko.computed(function() {
         var x = ((self.model.sizeX() - self.model.carX() -1) / self.model.sizeX()) * 100;
         return x +'%';
     })
 
+    //Update the car position
     self.model.guiCarY = ko.computed(function() {
         var y = (self.model.carY() / self.model.sizeY()) * 100;
         return y +'%';
     })
 
-
-    self.model.space = ko.observableArray([]);
-
-
+    //Update the map/space on update of input
     self.model.spacer = ko.computed(function() {
         var ar = [];
         for (let i = 0; i < self.model.sizeX(); i++) {
@@ -100,6 +113,7 @@ app.models.game = new function() {
         self.model.space(ar);
     });
 
+    //Clear the map/space on update of input
     self.clearSpace = function() {
         for (let i = 0; i < self.model.space().length; i++) {
             var item = self.model.space()[i];
@@ -111,9 +125,8 @@ app.models.game = new function() {
         }
     }
 
+    //Check if the car will crash on next move
     self.willCrash = function(x, y) {
-        // debugger
-        console.log(x, y, self.model.sizeX(), self.model.sizeY());
         if (x < 0 || y < 0 || x > self.model.sizeX() - 1 || y > self.model.sizeY() - 1) {
             console.error('*********** CRASH ************')
             self.model.crash(true);
@@ -123,6 +136,7 @@ app.models.game = new function() {
         return false;
     }
 
+    //Helper functions for moving of the car
     self.carMove = function(x, y) {
         if (!self.willCrash(x, y)) {
             self.model.carX(x);
@@ -154,6 +168,7 @@ app.models.game = new function() {
         return self.carMove(x, y)
     }
 
+    //Drive step by step, takes a callback as argument
     self.driveStep = function(cb) {
 
         if (self.model.pathRemaining().length === 0) {
@@ -169,7 +184,6 @@ app.models.game = new function() {
 
         self.model.pathRemaining(rest);
         
-
         switch (action) {
             case 'F':
                 switch (self.model.carDirection()) {
@@ -185,42 +199,40 @@ app.models.game = new function() {
                         break;
                                 
                     default:
-                        self.carMoveUp();
+                        self.carMoveLeft();
                         break;
                 }
                 break;
             case 'B':
-                    switch (self.model.carDirection()) {
-                        case 'N':
-                            var prev = self.model.carX();
-                            self.model.carX(prev - 1);
-                            break;
-                        case 'E':
-                            var prev = self.model.carY();
-                            self.model.carY(prev - 1);
-                            break;
-                        case 'S':
-                            var prev = self.model.carX();
-                            self.model.carX(prev + 1);
-                            break;
-                                    
-                        default:
-                            var prev = self.model.carY();
-                            self.model.carX(prev + 1);
-                            break;
-                    }
-                    break;
+                switch (self.model.carDirection()) {
+                    case 'N':
+                        // var prev = self.model.carX();
+                        // self.model.carX(prev - 1);
+                        self.carMoveDown();
+                        break;
+                    case 'E':
+                        self.carMoveLeft();
+                        break;
+                    case 'S':
+                        self.carMoveUp();
+                        break;
+                                
+                    default:
+                        self.carMoveRight();
+                        break;
+                }
+                break;
             case 'R':
                 switch (self.model.carDirection()) {
                     case 'N':
                         self.model.carDirection('E')
                         break;
                     case 'E':
-                            self.model.carDirection('S')
-                            break;
+                        self.model.carDirection('S')
+                        break;
                     case 'S':
-                            self.model.carDirection('W')
-                            break;
+                        self.model.carDirection('W')
+                        break;
                     default:
                         self.model.carDirection('N')
                         break;
@@ -232,11 +244,11 @@ app.models.game = new function() {
                             self.model.carDirection('W')
                             break;
                         case 'W':
-                                self.model.carDirection('S')
-                                break;
+                            self.model.carDirection('S')
+                            break;
                         case 'S':
-                                self.model.carDirection('E')
-                                break;
+                            self.model.carDirection('E')
+                            break;
                         default:
                             self.model.carDirection('N')
                             break;
@@ -251,13 +263,14 @@ app.models.game = new function() {
         }
     }
 
-
+    //Start drive!
     self.drive = function() {
         app.models.audio.startSound('ingame');
 
         self.driveStep(self.driveStep);        
     };
 
+    //Set the car on the map
     self.setCarXYOnStart = function() {
 
         try {
@@ -277,14 +290,13 @@ app.models.game = new function() {
         }
     }
 
+    //Set the remainder of the path
     self.updatePathRemaining = ko.computed(function() {
         self.model.pathRemaining(self.model.pathStart());
     });
 
+    //Start method
     self.start = function() {
-
-
-
         self.setCarXYOnStart();
         self.model.carDirection(self.carDirection());
 
