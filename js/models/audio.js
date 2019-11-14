@@ -11,10 +11,10 @@ app.models.audio = new function() {
     var self = this;
     self.model = {};
 
-    self.model.start = new Audio('../../audio/start.mp3');
-    self.model.ingame = new Audio('../../audio/ingame.mp3');
-    self.model.win = new Audio('../../audio/win.mp3');
-    self.model.loose  = new Audio('../../audio/loose.mp3');
+    self.model.start = new Audio('https://peppelorum.github.io/rccar/audio/start.mp3');
+    self.model.ingame = new Audio('https://peppelorum.github.io/rccar/audio/ingame.mp3');
+    self.model.win = new Audio('https://peppelorum.github.io/rccar/audio/win.mp3');
+    self.model.loose  = new Audio('https://peppelorum.github.io/rccar/audio/loose.mp3');
 
     self.model.start.loop = true
     self.model.ingame.loop = true
