@@ -23,6 +23,17 @@
 #car.W {
   background-image: url('../images/car01/car01iso_0003.png');
 }
+#explosion {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  z-index: 1000;
+}
+#explosion.fire {
+  background-image: url('../images/explosion.gif');
+}
 #gameplanGraphic {
   display: inline-block;
   position: relative;
@@ -48,4 +59,28 @@
 }
 .row .tile._5 {
   background-image: url('../images/tiles/tile_5.png');
+}
+.row .tile.top {
+  background-image: url('../images/tiles/top.png') !important;
+}
+.row .tile.left {
+  background-image: url('../images/tiles/left.png') !important;
+}
+.row .tile.right {
+  background-image: url('../images/tiles/right.png') !important;
+}
+.row .tile.bottom {
+  background-image: url('../images/tiles/bottom.png') !important;
+}
+.row .tile.top.left {
+  background-image: url('../images/tiles/top_left.png') !important;
+}
+.row .tile.top.right {
+  background-image: url('../images/tiles/top_right.png') !important;
+}
+.row .tile.bottom.left {
+  background-image: url('../images/tiles/bottom_left.png') !important;
+}
+.row .tile.bottom.right {
+  background-image: url('../images/tiles/bottom_right.png') !important;
 }

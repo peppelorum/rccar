@@ -5,7 +5,9 @@
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
             <meta name="viewport" content="width=device-width, initial-scale=1">
 
+            <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/8.11.8/sweetalert2.min.css">
             <link rel="stylesheet" type="text/css" href="css/rc.css">
+            <link rel="stylesheet" type="text/css" href="css/fireworks.css">
     </head>
 
     <body data-bind="with: game" >
@@ -20,13 +22,25 @@
         <button data-bind="click: drive">Start</button>
         <button data-bind="click: driveStep">Step</button>
 
+        <button data-bind="click: app.models.audio.startSound('start')">Play</button>
+
         <div id="gameplanGraphic">
+
+            <div id="explosion" data-bind="style: { top: model.guiCarX, left: model.guiCarY }, css: { fire: model.crash }"></div>
 
                 <div data-bind="foreach: { data: model.space, as: 'row' }">
             
-                        <div class="row" data-bind="foreach: { data: row, as: 'item' }">
+                        <div class="row" data-bind="foreach: row ">
                             
-                            <div class="tile"></div>
+                            <div class="tile" data-bind="
+                                class: function() { return '_'+ Math.ceil(Math.random() * 5); }(), 
+                                css: { 
+                                    left: $index() === 0, 
+                                    right: $index() === app.models.game.model.sizeY() - 1, 
+                                    top: $parentContext.$index() === 0, 
+                                    bottom: $parentContext.$index() === app.models.game.model.sizeX() - 1 
+                                }">
+                            </div>
                             <!-- <div class="tile" data-bind="class: function() { return '_'+ Math.ceil(Math.random() * 5); }()"></div> -->
             
                         </div>
@@ -36,21 +50,23 @@
             <div id="car" data-bind="class: model.carDirection, style: { top: model.guiCarX, left: model.guiCarY }"></div>
 
         </div>
+
+
+        <div class="pyro" style="display: none;" data-bind="visible: model.success">
+            <div class="before"></div>
+            <div class="after"></div>
+        </div>
         
-
-
-
-
     </body>
 
 
-<script src="js/vendor/lodash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/8.11.8/sweetalert2.all.min.js" integrity="sha256-2RS1U6UNZdLS0Bc9z2vsvV4yLIbJNKxyA4mrx5uossk=" crossorigin="anonymous"></script>
+    <script src="js/vendor/lodash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.0/knockout-min.js"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.0/knockout-min.js"></script>
-<!-- <script src="js/vendor/knockout.mapping-latest.js"></script> -->
-<!-- <script src="js/vendor/knockout.validation.min.js"></script> -->
 
-<script src="js/rc.js"></script>
-<script src="js/models/game.js"></script>
+    <script src="js/rc.js"></script>
+    <script src="js/models/game.js"></script>
+    <script src="js/models/audio.js"></script>
 
 </html>
