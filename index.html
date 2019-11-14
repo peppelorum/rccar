@@ -20,19 +20,6 @@
         <button data-bind="click: drive">Start</button>
         <button data-bind="click: driveStep">Step</button>
 
-        <div id="gameplan" data-bind="foreach: { data: model.space, as: 'row' }">
-            
-            <div data-bind="foreach: { data: row, as: 'item' }">
-                
-                <i data-bind="text: item"></i>
-
-            </div>
-
-        </div>
-
-
-
-
         <div id="gameplanGraphic">
 
                 <div data-bind="foreach: { data: model.space, as: 'row' }">
