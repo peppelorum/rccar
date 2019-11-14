@@ -122,7 +122,7 @@ var app = new function() {
             html: 'You made it! <br>'+
             'You saved the dragon and killed the princess! '+
             'All the villagers rejoiced and feasted for three days in your honor!<br>'+
-            '(end position: x:'+ app.models.game.model.carX() +' y:'+ app.models.game.model.carY() +' direction:'+ app.models.game.model.carDirection() +')',
+            '(end position: x:'+ (app.models.game.model.carX() + 1) +' y:'+ (app.models.game.model.carY() + 1) +' direction:'+ app.models.game.model.carDirection() +')',
             confirmButtonText: '<3'
           })
     }
