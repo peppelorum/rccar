@@ -36,6 +36,19 @@
 
 }
 
+#explosion {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    z-index: 1000;
+
+    &.fire {
+        background-image: url('../images/explosion.gif');
+    }
+}
+
 #gameplanGraphic {
     display: inline-block;
     position: relative;
@@ -66,6 +79,38 @@
 
         &._5 {
             background-image: url('../images/tiles/tile_5.png');
+        }
+
+        &.top {
+            background-image: url('../images/tiles/top.png') !important;
+        }
+
+        &.left {
+            background-image: url('../images/tiles/left.png') !important;
+        }
+
+        &.right {
+            background-image: url('../images/tiles/right.png') !important;
+        }
+
+        &.bottom {
+            background-image: url('../images/tiles/bottom.png') !important;
+        }
+
+        &.top.left {
+            background-image: url('../images/tiles/top_left.png') !important;
+        }
+
+        &.top.right {
+            background-image: url('../images/tiles/top_right.png') !important;
+        }
+
+        &.bottom.left {
+            background-image: url('../images/tiles/bottom_left.png') !important;
+        }
+
+        &.bottom.right {
+            background-image: url('../images/tiles/bottom_right.png') !important;
         }
     }
 }
