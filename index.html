@@ -14,7 +14,7 @@
 
     <body data-bind="with: game" >
         <div id="wrapper">
-            <div id="gameplanGraphic">
+            <div id="gameplanGraphic" data-bind="style: { width: model.sizeX() * 40 }">
                 <div id="explosion" data-bind="style: { top: model.guiCarX, left: model.guiCarY }, css: { fire: model.crash }"></div>
     
                     <div data-bind="foreach: { data: model.space, as: 'row' }">

@@ -36,7 +36,8 @@ var app = new function() {
           }).queue([
             {
                 title: 'Parking lot size',
-                text: 'The evil wizard has temporarily lost his wand and now you got the chance to set the size of the parking lot! Be wise young adventurer!',
+                html: 'The evil wizard has temporarily lost his wand and now you got the chance to set the size of the parking lot! Be wise young adventurer!'+
+                '<br>(On mobile: use a lower number (5 5) due to the limited screen space)',
                 inputPlaceholder: "5 5",
                 preConfirm: function(value) {
                     try {
