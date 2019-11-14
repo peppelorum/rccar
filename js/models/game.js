@@ -24,6 +24,24 @@ app.models.game = new function() {
     self.model.carDirection = ko.observable('');
     self.model.crash = ko.observable(false);
     self.model.crashSite = ko.observableArray([]);
+    self.model.success = ko.observable(false);
+    self.model.successChecker = ko.computed(function() {            //This should be a subscribe..
+        if (!self.model.crash() && self.model.pathRemaining().length === 0) {
+            if (app.models.audio) {
+                setTimeout(function() {
+                    app.models.game.model.success(true);
+                    app.models.audio.startSound('win');
+                }, 1000);
+            }
+        }
+        self.model.success(false);
+    });
+
+    self.onCrash = ko.computed(function() { 
+        if (self.model.crash()) {
+            app.models.audio.startSound('loose');
+        }
+    })
 
 
     self.carDirection = ko.computed(function() {
@@ -235,6 +253,8 @@ app.models.game = new function() {
 
 
     self.drive = function() {
+        app.models.audio.startSound('ingame');
+
         self.driveStep(self.driveStep);        
     };
 
@@ -262,6 +282,9 @@ app.models.game = new function() {
     });
 
     self.start = function() {
+
+
+
         self.setCarXYOnStart();
         self.model.carDirection(self.carDirection());
 
